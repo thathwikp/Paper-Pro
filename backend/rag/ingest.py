@@ -48,7 +48,7 @@ def extract_page_chunks(pdf_path):
 
 
 # Ingest one PDF into the collection. Source is "library" or "upload"
-def ingest_pdf(pdf_path, title, source="library", owner_id="public"):
+def ingest_pdf(pdf_path, title, source="library", owner_id="public", extra_metadata=None):
     paper_id = make_paper_id(pdf_path)
 
     if is_already_ingested(paper_id):
@@ -76,6 +76,7 @@ def ingest_pdf(pdf_path, title, source="library", owner_id="public"):
             "page": page_number,
             "source": source,
             "owner_id": owner_id,
+            **(extra_metadata or {}),
         })
 
     # Embed all chunks in one batch
